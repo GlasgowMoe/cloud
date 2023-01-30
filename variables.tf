@@ -5,5 +5,5 @@ variable "environment" {}
 variable "region" {}
 variable "alb-name" {}
 #......variable vpc_id {}
-variable "my_public_key_location" {}
+#variable "my_public_key_location" {}
 variable "image" {}
