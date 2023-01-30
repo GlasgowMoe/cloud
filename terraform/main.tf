@@ -1,3 +1,4 @@
+#execute github
 terraform {
   required_providers {
     aws = {
