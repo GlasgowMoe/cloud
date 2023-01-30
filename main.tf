@@ -2,8 +2,8 @@
 terraform {
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
-      
+      source = "hashicorp/aws"
+
     }
     random = {
       source  = "hashicorp/random"
@@ -21,49 +21,49 @@ terraform {
   }
 }
 
-  provider "aws" {
+provider "aws" {
   region = "us-east-2"
 }
 module "myvpc" {
-  source = "./modules/networking"
-  azs = var.azs
-  environment =  var.environment
+  source          = "./modules/networking"
+  azs             = var.azs
+  environment     = var.environment
   private_subnets = var.private_subnets
-  public_subnets = var.public_subnets
-  region = var.region
+  public_subnets  = var.public_subnets
+  region          = var.region
 }
 
 
 
 module "sg1" {
-  source = "./modules/sg"
+  source   = "./modules/sg"
   alb-name = "test-sg"
-  vpc_id = module.myvpc.getvpcid
+  vpc_id   = module.myvpc.getvpcid
 }
 
 
 
 module "mylb" {
-  source = "./modules/lb"
-  vpc_id = module.myvpc.getvpcid
-  environment = var.environment
-  instance = [module.instance1.instanceid]
+  source          = "./modules/lb"
+  vpc_id          = module.myvpc.getvpcid
+  environment     = var.environment
+  instance        = [module.instance1.instanceid]
   target_instance = module.instance1.instanceid
-  sg = module.sg1.getsgid
-  getsubnetsid = module.myvpc.subnets
+  sg              = module.sg1.getsgid
+  getsubnetsid    = module.myvpc.subnets
 }
 
 module "instance1" {
-  source = "./modules/ec2"
-  env_prefix = "dev"
-  image_name = var.image[0]
+  source                 = "./modules/ec2"
+  env_prefix             = "dev"
+  image_name             = var.image[0]
   my_public_key_location = var.my_public_key_location
-  instance_type = "t2.micro"
-  avail_zone = var.azs[0]
-  subnet_id = module.myvpc.getsubnetid[0]
-  vpc_id =  module.myvpc.getvpcid
+  instance_type          = "t2.micro"
+  avail_zone             = var.azs[0]
+  subnet_id              = module.myvpc.getsubnetid[0]
+  vpc_id                 = module.myvpc.getvpcid
   vpc_security_group_ids = module.sg1.getsgid
-  my_ip =  "0.0.0.0/0"
+  my_ip                  = "0.0.0.0/0"
 
 }
 
