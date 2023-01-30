@@ -57,7 +57,7 @@ module "instance1" {
   source                 = "./modules/ec2"
   env_prefix             = "dev"
   image_name             = var.image[0]
-  my_public_key_location = var.my_public_key_location
+  #my_public_key_location = var.my_public_key_location
   instance_type          = "t2.micro"
   avail_zone             = var.azs[0]
   subnet_id              = module.myvpc.getsubnetid[0]
