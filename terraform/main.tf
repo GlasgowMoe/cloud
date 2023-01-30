@@ -42,7 +42,6 @@ module "sg1" {
 }
 
 
-
 module "mylb" {
   source = "./modules/lb"
   vpc_id = module.myvpc.getvpcid
