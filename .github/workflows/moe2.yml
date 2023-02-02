@@ -1,3 +1,5 @@
+  name: moe2 "Terraform"
+  
   on:
     push:
       branches:
